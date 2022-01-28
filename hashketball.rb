@@ -1,4 +1,6 @@
 # Write your code below game_hash
+require 'pry'
+
 def game_hash
   {
     home: {
@@ -127,3 +129,56 @@ def game_hash
 end
 
 # Write code here
+def num_points_scored(name)
+  player = get_stats(name)
+  player[:points]
+end
+
+def players_info
+  game_hash[:home][:players] + game_hash[:away][:players]
+end
+
+def get_stats(name)
+  players_info.find {|player| player[:player_name] == name}
+end
+
+def shoe_size(name)
+  player = get_stats(name)
+  player[:shoe]
+end
+
+def get_team(name)
+  find_team = game_hash.find do |location, team_data|
+     team_data[:team_name] == name
+  end
+  find_team[1]
+end
+
+def team_colors(name)
+  team = get_team(name)
+  # binding.pry
+  team[:colors]
+end
+
+def team_names
+   game_hash.map do |location, data|
+    data[:team_name]
+  end
+end
+
+def player_numbers(name)
+  team = get_team(name)
+  # binding.pry
+  team[:players].map do |player|
+    player[:number]
+  end
+end
+
+def player_stats(name)
+  get_stats(name)
+end
+
+def big_shoe_rebounds
+  biggest_player = players_info.max_by {|player| player[:shoe] }
+  biggest_player[:rebounds]
+end
